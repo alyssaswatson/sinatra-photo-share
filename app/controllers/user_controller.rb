@@ -9,8 +9,9 @@ class UserController < ApplicationController
       redirect '/users/new'
     else
       @user = User.create(params)
-      redirect '/users/'
-    binding.pry
+      #binding.pry
+      redirect '/photos'
+    end
   end
 
 end
