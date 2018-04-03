@@ -10,7 +10,21 @@ class UserController < ApplicationController
     else
       @user = User.create(params)
       #binding.pry
-      redirect '/photos'
+      redirect to '/photos'
+    end
+  end
+
+  get '/login' do
+    erb :'users/login'
+  end
+
+  post '/login' do
+    user = User.find_by(:username => params[:username])
+    if user && user.authenticate(params[:password])
+      session[:user_id] = user.id
+      redirect to '/photos'
+    else
+      redirect to '/users/new'
     end
   end
 

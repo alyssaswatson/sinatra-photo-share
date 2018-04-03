@@ -1,0 +1,8 @@
+<form method="post" action="/photos/<%=@photo.id%>">
+  <input id="hidden" type="hidden" name="_method" value="patch">
+  Link to Photo:<input type="text" name="link" value="<%=@photo.link%>">
+  <br><br>
+  Caption:<input type="text" name="caption" value="<%=@photo.caption%>">
+  <br><br>
+  <input type="submit">
+</form>
