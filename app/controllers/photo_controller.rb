@@ -1,21 +1,34 @@
 class PhotoController < ApplicationController
 
   get '/photos' do
-    @photos = Photo.all
-    erb :'photos/photos'
+    if logged_in?
+      @photos = Photo.all
+      erb :'photos/photos'
+    else
+      redirect to '/login'
+    end
   end
 
   get '/photos/new' do
-    erb :'photos/new'
+    if logged_in?
+      erb :'photos/new'
+    else
+      redirect to '/login'
+    end
   end
 
   post '/photos' do
     #binding.pry
-    if params[:link] != "" && params[:caption] != ""
-      @photo = Photo.create(params)
-      redirect to "/photos/#{@photo.id}"
+    if logged_in?
+      if params[:link] != "" && params[:caption] != ""
+        @photo = current_user.photos.build(caption: params[:caption])
+        #binding.pry
+        redirect to "/photos/#{@photo.id}"
+      else
+        redirect to '/photos/new'
+      end
     else
-      redirect to '/photos/new'
+      redirect to '/login'
     end
   end
 
@@ -27,7 +40,7 @@ class PhotoController < ApplicationController
 
   get '/photos/:id/edit' do
     @photo = Photo.find_by_id(params[:id])
-    #binding.pry
+    binding.pry
     erb :'photos/edit'
   end
 
