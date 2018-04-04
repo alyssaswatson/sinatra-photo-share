@@ -1,7 +1,7 @@
 <%@photos.each do |photo|%>
   <%=photo.link%>
   <br>
-  <%=photo.caption%>
+  <a href="/photos/<%=photo.id%>"> <%=photo.caption%> </a>
   <br>
   <br>
   <br>
