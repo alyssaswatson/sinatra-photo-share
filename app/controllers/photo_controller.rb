@@ -13,7 +13,6 @@ class PhotoController < ApplicationController
     #binding.pry
     if params[:link] != "" && params[:caption] != ""
       @photo = Photo.create(params)
-      #binding.pry
       redirect to "/photos/#{@photo.id}"
     else
       redirect to '/photos/new'
@@ -21,18 +20,19 @@ class PhotoController < ApplicationController
   end
 
   get '/photos/:id' do
-    @photo = Photo.find_by(params[:id])
+    binding.pry
+    @photo = Photo.find_by_id(params[:id])
     erb :'photos/show'
   end
 
   get '/photos/:id/edit' do
-    @photo = Photo.find_by(params[:id])
+    @photo = Photo.find_by_id(params[:id])
     #binding.pry
     erb :'photos/edit'
   end
 
   patch '/photos/:id' do
-    @photo = Photo.find_by(params[:id])
+    @photo = Photo.find_by_id(params[:id])
     @photo.link = params[:link]
     @photo.caption = params[:caption]
     @photo.save
@@ -40,7 +40,7 @@ class PhotoController < ApplicationController
   end
 
   delete '/photos/:id/delete' do
-    @photo = Photo.find_by(params[:id])
+    @photo = Photo.find_by_id(params[:id])
     @photo.delete
     #binding.pry
     redirect to '/photos'
