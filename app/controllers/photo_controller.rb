@@ -36,14 +36,27 @@ class PhotoController < ApplicationController
 
   get '/photos/:id' do
     #binding.pry
-    @photo = Photo.find_by_id(params[:id])
-    erb :'photos/show'
+    if logged_in?
+      @photo = Photo.find_by_id(params[:id])
+      erb :'photos/show'
+    else
+      redirect to '/login'
+    end
   end
 
   get '/photos/:id/edit' do
-    @photo = Photo.find_by_id(params[:id])
-    binding.pry
-    erb :'photos/edit'
+
+    if logged_in?
+      @photo = Photo.find_by_id(params[:id])
+      if @photo && @photo.user == current_user
+        erb :'photos/edit'
+      else
+        redirect to '/photos'
+      end
+    else
+      redirect to '/login'
+    end
+
   end
 
   patch '/photos/:id' do
