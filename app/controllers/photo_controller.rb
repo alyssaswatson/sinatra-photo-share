@@ -20,7 +20,7 @@ class PhotoController < ApplicationController
   end
 
   get '/photos/:id' do
-    binding.pry
+    #binding.pry
     @photo = Photo.find_by_id(params[:id])
     erb :'photos/show'
   end
