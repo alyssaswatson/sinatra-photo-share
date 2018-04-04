@@ -39,4 +39,11 @@ class PhotoController < ApplicationController
     redirect to "/photos/#{@photo.id}"
   end
 
+  delete '/photos/:id/delete' do
+    @photo = Photo.find_by(params[:id])
+    @photo.delete
+    #binding.pry
+    redirect to '/photos'
+  end
+
 end
