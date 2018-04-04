@@ -1,6 +1,7 @@
 class PhotoController < ApplicationController
 
   get '/photos' do
+    #binding.pry
     if logged_in?
       @photos = Photo.all
       erb :'photos/photos'
@@ -21,7 +22,8 @@ class PhotoController < ApplicationController
     #binding.pry
     if logged_in?
       if params[:link] != "" && params[:caption] != ""
-        @photo = current_user.photos.build(caption: params[:caption])
+        @photo = current_user.photos.build(caption: params[:caption], link: params[:link])
+        @photo.save
         #binding.pry
         redirect to "/photos/#{@photo.id}"
       else
