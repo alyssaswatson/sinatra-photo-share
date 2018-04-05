@@ -1,7 +1,9 @@
 <%@photos.each do |photo|%>
   <img src="<%=photo.link%>" height="250">
   <br>
-  <a href="/photos/<%=photo.id%>"> <%=photo.caption%> </a>
+  caption: <a href="/photos/<%=photo.id%>"> <%=photo.caption%> </a>
+  <br>
+  username: <%=photo.user.username%>
   <br>
   <br>
   <br>

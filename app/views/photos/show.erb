@@ -1,7 +1,9 @@
 
   <img src="<%=@photo.link%>" height="250">
   <br>
-  <%=@photo.caption%>
+  caption: <%=@photo.caption%>
+  <br>
+  username: <%=@photo.user.username%>
   <br>
   <br>
   <a href="/photos/<%=@photo.id%>/edit">Edit</a>
