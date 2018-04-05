@@ -60,18 +60,23 @@ class PhotoController < ApplicationController
   end
 
   patch '/photos/:id' do
-    @photo = Photo.find_by_id(params[:id])
-    @photo.link = params[:link]
-    @photo.caption = params[:caption]
-    @photo.save
-    redirect to "/photos/#{@photo.id}"
+    if params[:link] != "" && params[:content] != ""
+      @photo = Photo.find_by_id(params[:id])
+      @photo.link = params[:link]
+      @photo.caption = params[:caption]
+      @photo.save
+      redirect to "/photos/#{@photo.id}"
+    else
+      redirect to '/photos'
+    end
   end
 
   delete '/photos/:id/delete' do
     @photo = Photo.find_by_id(params[:id])
-    @photo.delete
-    #binding.pry
-    redirect to '/photos'
+    if @photo.user == current_user
+      @photo.delete
+    else
+      redirect to '/photos'
+    end
   end
-
 end
