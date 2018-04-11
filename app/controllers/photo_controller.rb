@@ -6,6 +6,7 @@ class PhotoController < ApplicationController
       @photos = Photo.all
       erb :'photos/photos'
     else
+      flash[:message] = "Please login to view that page!"
       redirect to '/login'
     end
   end
@@ -14,6 +15,7 @@ class PhotoController < ApplicationController
     if logged_in?
       erb :'photos/new'
     else
+      flash[:message] = "Please login to view that page!"
       redirect to '/login'
     end
   end
@@ -27,9 +29,11 @@ class PhotoController < ApplicationController
         #binding.pry
         redirect to "/photos/#{@photo.id}"
       else
+        flash[:message] = "Please make sure you fill all fields!"
         redirect to '/photos/new'
       end
     else
+      flash[:message] = "Please login to view that page!"
       redirect to '/login'
     end
   end
@@ -40,6 +44,7 @@ class PhotoController < ApplicationController
       @photo = Photo.find_by_id(params[:id])
       erb :'photos/show'
     else
+      flash[:message] = "Please login to view that page!"
       redirect to '/login'
     end
   end
@@ -51,9 +56,11 @@ class PhotoController < ApplicationController
       if @photo && @photo.user == current_user
         erb :'photos/edit'
       else
+        flash[:message] = "Only the person that owns that photo may edit it!"
         redirect to '/photos'
       end
     else
+      flash[:message] = "Please login to view that page!"
       redirect to '/login'
     end
 
@@ -67,6 +74,7 @@ class PhotoController < ApplicationController
       @photo.save
       redirect to "/photos/#{@photo.id}"
     else
+      flash[:message] = "Make sure all fields are filled before you submit!"
       redirect to '/photos'
     end
   end
@@ -76,6 +84,7 @@ class PhotoController < ApplicationController
     if @photo.user == current_user
       @photo.delete
     else
+      flash[:message] = "You can't delete other users photos!"
       redirect to '/photos'
     end
   end

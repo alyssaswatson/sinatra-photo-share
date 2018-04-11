@@ -17,6 +17,9 @@
             <li><a href="/users/new" title="create account">Create an Account</a></li>
             <li><a href="/logout" title="logout">Logout</a></li>
 </ul>
+<% if flash.has?(:message) %>
+  <%= flash[:message] %>
+<% end %>
 
 <br>
 <br>

@@ -4,12 +4,14 @@ class UserController < ApplicationController
     if !logged_in?
       erb :'users/new'
     else
+      flash[:message] = "You are already logged in!"
       redirect to 'photos'
     end
   end
 
   post '/users' do
     if params[:password] == "" || params[:username] == ""
+      flash[:message] = "You must fill out all fields"
       redirect to '/users/new'
     else
       @user = User.create(params)
@@ -23,6 +25,7 @@ class UserController < ApplicationController
     if !logged_in?
       erb :'users/login'
     else
+     flash[:message] = "You are already logged in!"
      redirect to '/photos'
     end
   end
@@ -33,6 +36,7 @@ class UserController < ApplicationController
       session[:user_id] = user.id
       redirect to '/photos'
     else
+      flash[:message] = "Sorry, your username or password do not match an existing account"
       redirect to '/users/new'
     end
   end
@@ -42,6 +46,7 @@ class UserController < ApplicationController
         session.clear
         redirect to '/login'
       else
+        flash[:message] = "You are already logged out!"
         redirect to '/'
       end
     end
